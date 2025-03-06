@@ -1,0 +1,17 @@
+.todo {
+  width: 100%;
+
+  padding: 12px;
+  border-radius: 8px;
+
+  background-color: #222;
+
+  display: flex;
+  justify-content: space-between;
+
+  &:hover {
+    background-color: #1a1a1a;
+    cursor: pointer;
+    user-select: none;
+  }
+}
