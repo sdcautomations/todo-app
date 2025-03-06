@@ -9,9 +9,26 @@
   display: flex;
   justify-content: space-between;
 
+  font-size: 18px;
+
   &:hover {
     background-color: #1a1a1a;
     cursor: pointer;
     user-select: none;
+  }
+
+  &--checked {
+    text-decoration: line-through;
+    background-color: #111;
+
+    width: 100%;
+
+    padding: 12px;
+    border-radius: 8px;
+
+    display: flex;
+    justify-content: space-between;
+
+    font-size: 18px;
   }
 }
