@@ -1,21 +1,19 @@
-import { useState } from "react";
 import styles from "./todo.module.scss";
 
 export type TodoProps = {
+  id: string;
   content: string;
+  isChecked: boolean;
+  onClick: (id: string) => void;
 };
 
-export const Todo = ({ content }: TodoProps) => {
-  const [isChecked, setIsChecked] = useState(false);
-
-  const handleClick = () => {
-    setIsChecked(!isChecked);
-  };
-
+export const Todo = ({ id, content, isChecked, onClick }: TodoProps) => {
   return (
     <div
       className={!isChecked ? styles["todo"] : styles["todo--checked"]}
-      onClick={handleClick}
+      onClick={() => {
+        onClick(id);
+      }}
     >
       {content}
     </div>

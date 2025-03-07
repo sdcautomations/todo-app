@@ -1,27 +1,78 @@
 import { useState } from "react";
 import styles from "./app.module.scss";
+
 import { Todo } from "./components";
+import { makeId } from "./utils/makeId";
+
+type Task = {
+  id: string;
+  content: string;
+  isChecked: boolean;
+};
 
 export const App = () => {
-  const [tasks, setTasks] = useState<Array<string>>([]);
+  const [tasks, setTasks] = useState<Array<Task>>([]);
   const [inputValue, setInputValue] = useState<string>("");
 
-  const handleAddTask = (newTask: string) => {
-    setTasks([...tasks, newTask]);
+  const createNewTask = ({
+    content,
+    id,
+    isChecked,
+  }: {
+    content: string;
+    id?: string;
+    isChecked?: boolean;
+  }) => {
+    return {
+      id: id || makeId(),
+      content,
+      isChecked: isChecked || false,
+    };
+  };
+
+  const handleTaskAdd = (newTaskContent: string) => {
+    setTasks([...tasks, createNewTask({ content: newTaskContent })]);
     setInputValue("");
+  };
+
+  const handleTaskClick = (id: string) => {
+    const newTasks = tasks.map((e: Task) => {
+      if (e.id === id) {
+        e.isChecked = !e.isChecked;
+      }
+
+      return e;
+    });
+
+    setTasks(newTasks as Task[]);
   };
 
   const handleInputChange = (value: any) => {
     setInputValue(value);
   };
 
+  const handleDeleteCheckedTasks = () => {
+    const activeTasks = tasks.filter((e: Task) => e.isChecked !== true);
+    console.log(activeTasks);
+
+    setTasks(activeTasks);
+  };
+
   return (
     <main className={styles["app"]}>
       <div className={styles["app__title"]}>Todo App</div>
+      <div className={styles["app__subtitle"]}>Active tasks left: 5</div>
 
       <div className={styles["app__tasks"]}>
-        {tasks.map((e: string) => {
-          return <Todo content={e} />;
+        {tasks.map((e: Task) => {
+          return (
+            <Todo
+              id={e.id}
+              content={e.content}
+              isChecked={e.isChecked}
+              onClick={handleTaskClick}
+            />
+          );
         })}
       </div>
 
@@ -39,10 +90,19 @@ export const App = () => {
         <div
           className={styles["app__form__button"]}
           onClick={() => {
-            handleAddTask(inputValue);
+            handleTaskAdd(inputValue);
           }}
         >
           Add Task
+        </div>
+
+        <div
+          className={styles["app__form__button"]}
+          onClick={() => {
+            handleDeleteCheckedTasks();
+          }}
+        >
+          Delete finished tasks
         </div>
       </div>
     </main>
