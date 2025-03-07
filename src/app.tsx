@@ -53,7 +53,6 @@ export const App = () => {
 
   const handleDeleteCheckedTasks = () => {
     const activeTasks = tasks.filter((e: Task) => e.isChecked !== true);
-    console.log(activeTasks);
 
     setTasks(activeTasks);
   };
