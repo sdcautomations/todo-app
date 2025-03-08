@@ -78,7 +78,6 @@ export const App = () => {
   return (
     <main className={styles["app"]}>
       <div className={styles["app__title"]}>Todo App</div>
-      <div className={styles["app__subtitle"]}>Active tasks left: 5</div>
 
       <div className={styles["app__tasks"]}>
         {tasks.map((e: Task) => {
