@@ -57,6 +57,24 @@ export const App = () => {
     setTasks(activeTasks);
   };
 
+  const handleEditSaved = (id: string, newContent: string) => {
+    const updatedTasks = tasks.map((e: Task) => {
+      if (e.id === id) {
+        e.content = newContent;
+      }
+
+      return e;
+    });
+
+    setTasks(updatedTasks);
+  };
+
+  const handleTaskDeleted = (id: string) => {
+    const updatedTasks = tasks.filter((e: Task) => e.id !== id);
+
+    setTasks(updatedTasks);
+  };
+
   return (
     <main className={styles["app"]}>
       <div className={styles["app__title"]}>Todo App</div>
@@ -67,15 +85,20 @@ export const App = () => {
           return (
             <Todo
               id={e.id}
+              key={e.id}
               content={e.content}
               isChecked={e.isChecked}
               onClick={handleTaskClick}
+              onEditSaved={handleEditSaved}
+              onTaskDeleted={handleTaskDeleted}
             />
           );
         })}
       </div>
 
       <div className={styles["app__form"]}>
+        <div className={styles["app__form__title"]}>Add new task</div>
+
         <input
           className={styles["app__form__input"]}
           type="text"
